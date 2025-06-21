@@ -9,33 +9,44 @@ define e = Character("Eileen")
 image bg map = Solid("#87CEEB")  # Sky blue background for the map
 
 # ALTERNATIVE: Using an actual image file for the map background
-# image bg map = "images/map_background.jpg"  # Replace with your image path
-# image bg map = Transform("images/map_background.jpg", size=(1280, 720))  # Resize to fit screen
+# To use a real image file instead of the solid color:
+# 1. Place your image in the "images" folder (create it if it doesn't exist)
+# 2. Uncomment one of the following lines and comment out the line above
+# 3. Replace "map_background.jpg" with your actual filename
+#
+# Basic usage (original size):
+# image bg map = "images/map_background.jpg"
+#
+# Resize to fit screen:
+# image bg map = Transform("images/map_background.jpg", size=(1280, 720))
 
-image roof = Transform(Solid("#A52A2A", xysize=(200, 50)), rotate=45, yanchor=0.5, ypos=0)
-
-# ALTERNATIVE: Using an actual image file for the roof
-# image roof = "images/roof.png"  # Replace with your image path
-# image roof = Transform("images/roof.png", size=(200, 50), rotate=45, yanchor=0.5, ypos=0)  # Resize and transform
 
 image house = Composite(
     (200, 150),
     (0, 0), Solid("#8B4513", xysize=(200, 100)),  # Brown house body
     (50, 100), Solid("#8B4513", xysize=(100, 50)),  # Door
     (20, 20), Solid("#ADD8E6", xysize=(50, 50)),  # Window 1
-    (130, 20), Solid("#ADD8E6", xysize=(50, 50)),  # Window 2
-    (0, -25), "roof"  # Roof using a transformed rectangle
+    (130, 20), Solid("#ADD8E6", xysize=(50, 50))  # Window 2
 )
 
 # ALTERNATIVE: Using an actual image file for the house
-# image house = "images/house.png"  # Replace with your image path
-# image house = Transform("images/house.png", size=(200, 150))  # Resize to match current dimensions
+# To use a real image file instead of the composite house:
+# 1. Place your complete house image (including roof and all details) in the "images" folder
+# 2. Comment out the entire Composite definition above
+# 3. Uncomment one of the following options and replace filenames with your actual images
+#
+# Basic usage (original size):
+# image house = "images/house.png"
+#
+# With resizing to match current dimensions:
+# image house = Transform("images/house.png", size=(200, 150))
 # 
-# You can also use ConditionSwitch to have different house images for different states:
+# Advanced: Using different house styles with ConditionSwitch
+# (This allows you to change house styles during gameplay by setting persistent.house_style)
 # image house = ConditionSwitch(
 #     "persistent.house_style == 'modern'", Transform("images/modern_house.png", size=(200, 150)),
 #     "persistent.house_style == 'cottage'", Transform("images/cottage.png", size=(200, 150)),
-#     True, Transform("images/default_house.png", size=(200, 150))
+#     True, Transform("images/default_house.png", size=(200, 150))  # Default fallback
 # )
 
 # The game starts here.
@@ -86,12 +97,17 @@ screen map_navigation():
         yalign 0.5
 
     # ALTERNATIVE: Using actual image files for the imagebutton with different idle/hover states
+    # To use real image files for the imagebutton instead of the "house" displayable:
+    # 1. Place your idle and hover state images in the "images" folder
+    # 2. Comment out the entire imagebutton block above
+    # 3. Uncomment the following block and replace filenames with your actual images
+    #
     # imagebutton:
-    #     idle Transform("images/house_idle.png", size=(200, 150))
-    #     hover Transform("images/house_hover.png", size=(200, 150))
-    #     action Jump("house_location")
-    #     xalign 0.5
-    #     yalign 0.5
+    #     idle Transform("images/house_idle.png", size=(200, 150))  # Image shown normally
+    #     hover Transform("images/house_hover.png", size=(200, 150))  # Image shown when mouse hovers over
+    #     action Jump("house_location")  # Keep this action to jump to the house location
+    #     xalign 0.5  # Center horizontally
+    #     yalign 0.5  # Center vertically
 
     # Add a text label for the house
     text "House" xalign 0.5 yalign 0.6 color "#FFFFFF" outlines [(2, "#000000", 0, 0)]
